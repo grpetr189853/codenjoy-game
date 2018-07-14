@@ -25,13 +25,14 @@ package com.codenjoy.dojo.plumber.model;
 
 import com.codenjoy.dojo.plumber.services.Events;
 import com.codenjoy.dojo.services.EventListener;
+import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 
 /**
  * Класс игрока. Тут кроме героя может подсчитываться очки.
  * Тут же ивенты передабтся лиснеру фреймворка.
  */
-public class Player extends GamePlayer<Hero, Field> {
+public class Player extends GamePlayer<Hero, GameField<Player>> {
 
     Hero hero;
 
@@ -53,14 +54,13 @@ public class Player extends GamePlayer<Hero, Field> {
     }
 
     @Override
-    public void newHero(Field field) {
-        hero = new Hero(field.getFreeRandom());
+    public void newHero(GameField<Player> field) {
         hero.init(field);
     }
 
     @Override
     public boolean isAlive() {
-        return hero != null && hero.isAlive();
+        return true;
     }
 
 }

@@ -23,7 +23,7 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-import com.codenjoy.dojo.plumber.model.items.Gold;
+
 import com.codenjoy.dojo.plumber.model.items.Wall;
 import com.codenjoy.dojo.services.LengthToXY;
 import com.codenjoy.dojo.services.Point;
@@ -31,8 +31,6 @@ import com.codenjoy.dojo.services.Point;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.codenjoy.dojo.plumber.model.Elements.GOLD;
-import static com.codenjoy.dojo.plumber.model.Elements.HERO;
 import static com.codenjoy.dojo.plumber.model.Elements.WALL;
 import static java.util.stream.Collectors.toList;
 
@@ -54,20 +52,6 @@ public class LevelImpl implements Level {
         return (int) Math.sqrt(map.length());
     }
 
-    @Override
-    public List<Hero> getHero() {
-        return pointsOf(HERO).stream()
-                .map(Hero::new)
-                .collect(toList());
-
-    }
-
-    @Override
-    public List<Gold> getGold() {
-        return pointsOf(GOLD).stream()
-                .map(Gold::new)
-                .collect(toList());
-    }
 
     @Override
     public List<Wall> getWalls() {

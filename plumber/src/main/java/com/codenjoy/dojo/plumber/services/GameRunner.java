@@ -24,7 +24,7 @@ package com.codenjoy.dojo.plumber.services;
 
 
 import com.codenjoy.dojo.client.WebSocketRunner;
-import com.codenjoy.dojo.plumber.client.ai.ApofigSolver;
+import com.codenjoy.dojo.plumber.client.ai.PlumberSolver;
 import com.codenjoy.dojo.plumber.model.*;
 import com.codenjoy.dojo.services.*;
 import com.codenjoy.dojo.services.multiplayer.GameField;
@@ -116,7 +116,7 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     @Override
     public boolean newAI(String aiName) {
-        ApofigSolver.start(aiName, WebSocketRunner.Host.REMOTE_LOCAL, getDice());
+        PlumberSolver.start(aiName, WebSocketRunner.Host.REMOTE_LOCAL, getDice());
         return true;
     }
 }

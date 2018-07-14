@@ -23,7 +23,6 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-import com.codenjoy.dojo.plumber.model.items.Gold;
 import com.codenjoy.dojo.plumber.model.items.Wall;
 
 import java.util.List;
@@ -40,7 +39,4 @@ public interface Level {
 
     List<Wall> getWalls();
 
-    List<Hero> getHero();
-
-    List<Gold> getGold();
 }
