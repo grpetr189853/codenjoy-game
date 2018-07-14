@@ -24,6 +24,8 @@ package com.codenjoy.dojo.plumber.model;
 
 
 
+import com.codenjoy.dojo.plumber.model.items.Input;
+import com.codenjoy.dojo.plumber.model.items.Output;
 import com.codenjoy.dojo.plumber.model.items.Wall;
 import com.codenjoy.dojo.services.LengthToXY;
 import com.codenjoy.dojo.services.Point;
@@ -31,29 +33,39 @@ import com.codenjoy.dojo.services.Point;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.codenjoy.dojo.plumber.model.Elements.INPUT;
+import static com.codenjoy.dojo.plumber.model.Elements.OUTPUT;
 import static com.codenjoy.dojo.plumber.model.Elements.WALL;
 import static java.util.stream.Collectors.toList;
 
 /**
  * Полезный утилитный класс для получения объектов на поле из текстового вида.
  */
-public class LevelImpl implements Level {
+public class BoardStartConfig {
     private final LengthToXY xy;
 
     private String map;
 
-    public LevelImpl(String map) {
+    public BoardStartConfig(String map) {
         this.map = map;
         xy = new LengthToXY(getSize());
     }
 
-    @Override
     public int getSize() {
         return (int) Math.sqrt(map.length());
     }
 
+    public List<Input> getInput() {
+        return pointsOf(INPUT).stream()
+                .map(Input::new)
+                .collect(toList());
+    }
+    public List<Output> getOutput() {
+        return pointsOf(OUTPUT).stream()
+                .map(Output::new)
+                .collect(toList());
+    }
 
-    @Override
     public List<Wall> getWalls() {
         return pointsOf(WALL).stream()
                 .map(Wall::new)

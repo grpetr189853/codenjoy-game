@@ -32,7 +32,9 @@ import com.codenjoy.dojo.services.printer.CharElements;
 public enum Elements implements CharElements {
 
     NONE(' '),       // например это пустое место, куда можно перейти герою
-    WALL('☼');       // а это стенка, через которую я хочу чтобы проходить нельзя было
+    WALL('☼'),       // а это стенка, через которую я хочу чтобы проходить нельзя было
+    INPUT('╠'),
+    OUTPUT('╣');
 
     final char ch;
 

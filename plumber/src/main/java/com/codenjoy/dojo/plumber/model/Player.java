@@ -10,12 +10,12 @@ package com.codenjoy.dojo.plumber.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -25,16 +25,15 @@ package com.codenjoy.dojo.plumber.model;
 
 import com.codenjoy.dojo.plumber.services.Events;
 import com.codenjoy.dojo.services.EventListener;
-import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 
 /**
  * Класс игрока. Тут кроме героя может подсчитываться очки.
  * Тут же ивенты передабтся лиснеру фреймворка.
  */
-public class Player extends GamePlayer<Hero, GameField<Player>> {
+public class Player extends GamePlayer<Hero, Field> {
 
-    Hero hero;
+    private Hero hero;
 
     public Player(EventListener listener) {
         super(listener);
@@ -42,20 +41,25 @@ public class Player extends GamePlayer<Hero, GameField<Player>> {
 
     public void event(Events event) {
         switch (event) {
-            case LOOSE: gameOver(); break;
-            case WIN: increaseScore(); break;
+            case LOOSE:
+                gameOver();
+                break;
+            case WIN:
+                increaseScore();
+                break;
         }
 
         super.event(event);
     }
 
     public Hero getHero() {
-        return hero;
+        return this.hero;
     }
 
     @Override
-    public void newHero(GameField<Player> field) {
-        hero.init(field);
+    public void newHero(Field field) {
+        this.hero = new Hero();
+        this.hero.init(field);
     }
 
     @Override

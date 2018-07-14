@@ -39,11 +39,11 @@ import static com.codenjoy.dojo.services.settings.SimpleParameter.v;
  */
 public class GameRunner extends AbstractGameType implements GameType {
 
-    private final Level level;
+    private final BoardStartConfig boardStartConfig;
 
     public GameRunner() {
         new Scores(0, settings);
-        level = new LevelImpl(getMap());
+        boardStartConfig = new BoardStartConfig(getMap());
     }
 
     protected String getMap() {
@@ -86,12 +86,12 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     @Override
     public GameField createGame() {
-        return new Plumber(level, getDice());
+        return new Field(boardStartConfig);
     }
 
     @Override
     public Parameter<Integer> getBoardSize() {
-        return v(level.getSize());
+        return v(boardStartConfig.getSize());
     }
 
     @Override

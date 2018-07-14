@@ -23,12 +23,71 @@ package com.codenjoy.dojo.plumber;
  */
 
 
+import com.codenjoy.dojo.plumber.model.BoardStartConfig;
+import com.codenjoy.dojo.plumber.model.Field;
+import com.codenjoy.dojo.plumber.model.Player;
+import com.codenjoy.dojo.services.EventListener;
+import com.codenjoy.dojo.services.multiplayer.Single;
+import com.codenjoy.dojo.services.printer.PrinterFactory;
+import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
+import com.codenjoy.dojo.utils.TestUtils;
+import org.junit.Assert;
 import org.junit.Test;
+import org.mockito.Mockito;
 
 public class SmokeTest {
 
     @Test
-    public void test() {
+    public void boardCreatedSuccessfully() {
+        PrinterFactory factory = new PrinterFactoryImpl();
 
+        BoardStartConfig config = new BoardStartConfig("☼☼☼☼☼☼☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "╠     ╣" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☼☼☼☼☼☼");
+
+        Field startField = new Field(config);
+        Player player = new Player(Mockito.mock(EventListener.class));
+        Single game = new Single(startField, player, factory);
+
+        String expectedBoardStart = TestUtils.injectN("☼☼☼☼☼☼☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "╠     ╣" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☼☼☼☼☼☼");
+        Assert.assertEquals(expectedBoardStart, game.getBoardAsString());
+    }
+
+    @Test
+    public void pipeAddToBoard() {
+        PrinterFactory factory = new PrinterFactoryImpl();
+
+        BoardStartConfig config = new BoardStartConfig("☼☼☼☼☼☼☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "╠     ╣" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☼☼☼☼☼☼");
+
+        Field startField = new Field(config);
+        Player player = new Player(Mockito.mock(EventListener.class));
+        Single game = new Single(startField, player, factory);
+
+        player.getHero().
+
+        String expectedBoardStart = TestUtils.injectN("☼☼☼☼☼☼☼" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "╠═    ╣" +
+                "☼     ☼" +
+                "☼     ☼" +
+                "☼☼☼☼☼☼☼");
+        Assert.assertEquals(expectedBoardStart, game.getBoardAsString());
     }
 }

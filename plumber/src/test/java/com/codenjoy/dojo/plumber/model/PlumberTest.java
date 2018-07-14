@@ -26,23 +26,15 @@ package com.codenjoy.dojo.plumber.model;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.services.printer.PrinterFactory;
 import com.codenjoy.dojo.utils.TestUtils;
-import com.codenjoy.dojo.plumber.services.Events;
-import com.codenjoy.dojo.services.Dice;
-import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.stubbing.OngoingStubbing;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.anyInt;
-import static org.mockito.Mockito.*;
 
 public class PlumberTest {
 
-    private Plumber game;
+    private Field game;
     private PrinterFactory printer = new PrinterFactoryImpl();
     private GamePlayer player;
 

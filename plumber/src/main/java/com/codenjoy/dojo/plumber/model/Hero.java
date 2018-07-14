@@ -23,6 +23,7 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
+import com.codenjoy.dojo.plumber.model.items.Pipes;
 import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
 
@@ -61,6 +62,13 @@ public class Hero extends PlayerHero<GameField<Player>> {
 
     @Override
     public void tick() {
+        this.field.addPipe();
+    }
+
+    public void addPipe(Pipes pipe, int x, int y){
+        this.nextPipeToAdd = pipe;
+        this.nextX = x;
+        this.nextY = y;
 
     }
 }
