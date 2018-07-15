@@ -78,4 +78,15 @@ public class Pipe extends PointImpl implements State<Elements, Player> {
             return typeMapping;
         }
     }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("Pipe{");
+        sb.append(typePipe);
+        sb.append(", x: ").append(x);
+        sb.append(", y: ").append(y);
+        sb.append('}');
+
+        return sb.toString();
+    }
 }

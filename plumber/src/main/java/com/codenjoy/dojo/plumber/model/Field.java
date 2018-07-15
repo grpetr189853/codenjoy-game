@@ -23,6 +23,8 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
+import com.codenjoy.dojo.plumber.model.exceptions.CannotAddPipeException;
+import com.codenjoy.dojo.plumber.model.exceptions.MoreThanSinglePlayerAddedException;
 import com.codenjoy.dojo.plumber.model.items.Input;
 import com.codenjoy.dojo.plumber.model.items.Output;
 import com.codenjoy.dojo.plumber.model.items.Pipe;
@@ -113,12 +115,21 @@ public class Field implements GameField<Player> {
     public boolean addPipe(Pipe pipe) {
         if(validatePipesConnectivity(pipe)){
             return pipes.add(pipe);
-        } else {
-            return false;
         }
+
+        throw new CannotAddPipeException("Impossible to add pipe.");
     }
 
     private boolean validatePipesConnectivity(Pipe pipe) {
-        return false;
+        if (pipe.getX() < 0 || pipe.getY() < 0 || pipe.getX() >= size || pipe.getY() >= size){
+            throw new CannotAddPipeException("Impossible to add pipe " + pipe + " ouside of field");
+        }
+
+        if (pipes.contains(pipe)) {
+            throw new CannotAddPipeException("Position already contains pipe");
+        }
+
+
+        return true;
     }
 }

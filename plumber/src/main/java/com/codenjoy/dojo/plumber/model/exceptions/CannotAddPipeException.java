@@ -1,4 +1,4 @@
-package com.codenjoy.dojo.plumber.model;
+package com.codenjoy.dojo.plumber.model.exceptions;
 
 /*-
  * #%L
@@ -23,8 +23,8 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-class MoreThanSinglePlayerAddedException extends RuntimeException {
-    MoreThanSinglePlayerAddedException() {
-        super("Plumber game can have only single player!");
+public class CannotAddPipeException extends RuntimeException {
+    public CannotAddPipeException(final String msg) {
+        super(msg);
     }
 }

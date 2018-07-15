@@ -23,14 +23,17 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
+import com.codenjoy.dojo.plumber.model.exceptions.CannotAddPipeException;
+import com.codenjoy.dojo.plumber.model.exceptions.MoreThanSinglePlayerAddedException;
 import com.codenjoy.dojo.plumber.model.items.Pipe;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertFalse;
+import static com.codenjoy.dojo.plumber.model.Elements.HORIZONTAL_PIPE;
+import static com.codenjoy.dojo.plumber.model.Elements.UP_LEFT_PIPE;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -50,8 +53,15 @@ public class FieldTest {
     @Mock
     private Hero heroMock;
 
-    @InjectMocks
     private Field field;
+    private int size = 42;
+
+    @Before
+    public void setUp() {
+        when(boardStartConfig.getSize()).thenReturn(size);
+        when(player1.getHero()).thenReturn(heroMock);
+        field = new Field(boardStartConfig);
+    }
 
     @Test
     public void onePlayerAddedToFieldSuccessfully() {
@@ -66,25 +76,14 @@ public class FieldTest {
 
     @Test
     public void pipeAddedSuccessfully() {
-        Pipe pipe = new Pipe(Elements.HORIZONTAL_PIPE, 1, 3);
+        Pipe pipe = new Pipe(HORIZONTAL_PIPE, 1, 3);
 
         assertTrue(field.addPipe(pipe));
     }
 
     @Test
-    public void pipeCannotBeAddedTwice() {
-        Pipe pipe1 = new Pipe(Elements.HORIZONTAL_PIPE, 1, 3);
-        Pipe pipe2 = new Pipe(Elements.HORIZONTAL_PIPE, 1, 3);
-
-        assertTrue(field.addPipe(pipe1));
-        assertFalse(field.addPipe(pipe2));
-    }
-
-    @Test
     public void heroTickWhenFieldTick() {
         field.newGame(player1);
-
-        when(player1.getHero()).thenReturn(heroMock);
 
         field.tick();
 
@@ -98,7 +97,31 @@ public class FieldTest {
         verify(player1).newHero(field);
     }
 
-    // pipe can be added only within Field
-    // pipe can be added to only free slot
+    @Test(expected = CannotAddPipeException.class)
+    public void cannotAddPipeBelowOfTheField() {
+        field.addPipe(new Pipe(HORIZONTAL_PIPE, size / 2, -1));
+    }
+
+    @Test(expected = CannotAddPipeException.class)
+    public void cannotAddPipeAboveOfTheField() {
+        field.addPipe(new Pipe(HORIZONTAL_PIPE, size / 2, size + 1));
+    }
+
+    @Test(expected = CannotAddPipeException.class)
+    public void cannotAddPipeLeftToTheField() {
+        field.addPipe(new Pipe(HORIZONTAL_PIPE, -1, size / 2));
+    }
+
+    @Test(expected = CannotAddPipeException.class)
+    public void cannotAddPipeRightToTheField() {
+        field.addPipe(new Pipe(HORIZONTAL_PIPE, size + 1, size / 2));
+    }
+
+    @Test(expected = CannotAddPipeException.class)
+    public void cannotAddPipeTwiceInTheSamePosition() {
+        field.addPipe(new Pipe(HORIZONTAL_PIPE, 3, 3));
+        field.addPipe(new Pipe(UP_LEFT_PIPE, 3, 3));
+    }
+
     // pipe could be added only if it is connected to last pipe in already built pipeline
 }
