@@ -97,4 +97,8 @@ public class FieldTest {
 
         verify(player1).newHero(field);
     }
+
+    // pipe can be added only within Field
+    // pipe can be added to only free slot
+    // pipe could be added only if it is connected to last pipe in already built pipeline
 }

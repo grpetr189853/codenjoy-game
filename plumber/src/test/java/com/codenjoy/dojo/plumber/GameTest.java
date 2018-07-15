@@ -37,7 +37,7 @@ import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 
-public class SmokeTest {
+public class GameTest {
 
     @Test
     public void boardCreatedSuccessfully() {
@@ -94,4 +94,8 @@ public class SmokeTest {
                 "☼☼☼☼☼☼☼");
         assertEquals(expectedBoardStart, game.getBoardAsString());
     }
+
+
+    // round is over if not possible to add new pipe
+    // round is over if output is connected
 }

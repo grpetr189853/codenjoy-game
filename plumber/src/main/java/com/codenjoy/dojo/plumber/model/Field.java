@@ -111,6 +111,14 @@ public class Field implements GameField<Player> {
     }
 
     public boolean addPipe(Pipe pipe) {
-        return pipes.add(pipe);
+        if(validatePipesConnectivity(pipe)){
+            return pipes.add(pipe);
+        } else {
+            return false;
+        }
+    }
+
+    private boolean validatePipesConnectivity(Pipe pipe) {
+        return false;
     }
 }
