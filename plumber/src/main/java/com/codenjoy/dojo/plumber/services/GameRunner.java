@@ -25,10 +25,7 @@ package com.codenjoy.dojo.plumber.services;
 
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.plumber.client.ai.PlumberSolver;
-import com.codenjoy.dojo.plumber.model.BoardStartConfig;
-import com.codenjoy.dojo.plumber.model.Elements;
-import com.codenjoy.dojo.plumber.model.Field;
-import com.codenjoy.dojo.plumber.model.Player;
+import com.codenjoy.dojo.plumber.model.*;
 import com.codenjoy.dojo.services.AbstractGameType;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.GameType;
@@ -92,7 +89,7 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     @Override
     public GameField createGame() {
-        return new Field(boardStartConfig);
+        return new Field(boardStartConfig, new PipeConnectionsValidator());
     }
 
     @Override

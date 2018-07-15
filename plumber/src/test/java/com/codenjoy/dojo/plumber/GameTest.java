@@ -23,10 +23,7 @@ package com.codenjoy.dojo.plumber;
  */
 
 
-import com.codenjoy.dojo.plumber.model.BoardStartConfig;
-import com.codenjoy.dojo.plumber.model.Field;
-import com.codenjoy.dojo.plumber.model.Hero;
-import com.codenjoy.dojo.plumber.model.Player;
+import com.codenjoy.dojo.plumber.model.*;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.multiplayer.Single;
 import com.codenjoy.dojo.services.printer.PrinterFactory;
@@ -51,7 +48,7 @@ public class GameTest {
                 "☼     ☼" +
                 "☼☼☼☼☼☼☼");
 
-        Field startField = new Field(config);
+        Field startField = new Field(config, new PipeConnectionsValidator());
         Player player = new Player(Mockito.mock(EventListener.class), null);
         Single game = new Single(startField, player, factory);
 
@@ -77,7 +74,7 @@ public class GameTest {
                 "☼     ☼" +
                 "☼☼☼☼☼☼☼");
 
-        Field field = new Field(config);
+        Field field = new Field(config, new PipeConnectionsValidator());
         Player player = new Player(Mockito.mock(EventListener.class), new Hero());
         Single game = new Single(field, player, factory);
         field.newGame(player);

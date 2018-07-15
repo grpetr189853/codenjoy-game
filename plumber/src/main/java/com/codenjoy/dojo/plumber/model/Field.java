@@ -42,21 +42,22 @@ import java.util.*;
  */
 public class Field implements GameField<Player> {
 
-    private final List<Input> input;
-    private final List<Output> output;
+    private final Input input;
+    private final Output output;
     private final List<Wall> walls;
     private final Collection<Pipe> pipes;
-
     private Player player;
-
     private final int size;
+    private final PipeConnectionsValidator validator;
 
-    public Field(BoardStartConfig startConfig) {
-        walls = startConfig.getWalls();
-        input = startConfig.getInput();
-        output = startConfig.getOutput();
-        size = startConfig.getSize();
-        pipes = new LinkedHashSet<>();
+    public Field(BoardStartConfig startConfig, PipeConnectionsValidator validator) {
+        this.walls = startConfig.getWalls();
+        this.input = startConfig.getInput();
+        this.output = startConfig.getOutput();
+        this.size = startConfig.getSize();
+        this.pipes = new LinkedHashSet<>();
+        this.validator = validator;
+        this.validator.init(this.size, this.input);
     }
 
     @Override
@@ -104,32 +105,19 @@ public class Field implements GameField<Player> {
             public Iterable<? extends Point> elements() {
                 return new LinkedList<Point>() {{
                     addAll(Field.this.walls);
-                    addAll(Field.this.input);
-                    addAll(Field.this.output);
+                    add(Field.this.input);
+                    add(Field.this.output);
                     addAll(Field.this.pipes);
                 }};
             }
         };
     }
 
-    public boolean addPipe(Pipe pipe) {
-        if(validatePipesConnectivity(pipe)){
-            return pipes.add(pipe);
+    public boolean addPipe(Pipe pipeToAdd) {
+        if(validator.validatePipesConnectivity(pipeToAdd, this.pipes)){
+            return pipes.add(pipeToAdd);
         }
-
         throw new CannotAddPipeException("Impossible to add pipe.");
     }
 
-    private boolean validatePipesConnectivity(Pipe pipe) {
-        if (pipe.getX() < 0 || pipe.getY() < 0 || pipe.getX() >= size || pipe.getY() >= size){
-            throw new CannotAddPipeException("Impossible to add pipe " + pipe + " ouside of field");
-        }
-
-        if (pipes.contains(pipe)) {
-            throw new CannotAddPipeException("Position already contains pipe");
-        }
-
-
-        return true;
-    }
 }

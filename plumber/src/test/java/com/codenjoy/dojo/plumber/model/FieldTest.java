@@ -10,12 +10,12 @@ package com.codenjoy.dojo.plumber.model;
  * it under the terms of the GNU General Public License as
  * published by the Free Software Foundation, either version 3 of the
  * License, or (at your option) any later version.
- * 
+ *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public
  * License along with this program.  If not, see
  * <http://www.gnu.org/licenses/gpl-3.0.html>.
@@ -23,18 +23,18 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-import com.codenjoy.dojo.plumber.model.exceptions.CannotAddPipeException;
 import com.codenjoy.dojo.plumber.model.exceptions.MoreThanSinglePlayerAddedException;
 import com.codenjoy.dojo.plumber.model.items.Pipe;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static com.codenjoy.dojo.plumber.model.Elements.HORIZONTAL_PIPE;
-import static com.codenjoy.dojo.plumber.model.Elements.UP_LEFT_PIPE;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -48,19 +48,21 @@ public class FieldTest {
     private Player player2;
 
     @Mock
+    private Hero heroMock;
+
+    @Mock
     private BoardStartConfig boardStartConfig;
 
     @Mock
-    private Hero heroMock;
+    private PipeConnectionsValidator validator;
 
+    @InjectMocks
     private Field field;
-    private int size = 42;
 
     @Before
     public void setUp() {
-        when(boardStartConfig.getSize()).thenReturn(size);
         when(player1.getHero()).thenReturn(heroMock);
-        field = new Field(boardStartConfig);
+        when(validator.validatePipesConnectivity(any(), any())).thenReturn(true);
     }
 
     @Test
@@ -97,31 +99,6 @@ public class FieldTest {
         verify(player1).newHero(field);
     }
 
-    @Test(expected = CannotAddPipeException.class)
-    public void cannotAddPipeBelowOfTheField() {
-        field.addPipe(new Pipe(HORIZONTAL_PIPE, size / 2, -1));
-    }
-
-    @Test(expected = CannotAddPipeException.class)
-    public void cannotAddPipeAboveOfTheField() {
-        field.addPipe(new Pipe(HORIZONTAL_PIPE, size / 2, size + 1));
-    }
-
-    @Test(expected = CannotAddPipeException.class)
-    public void cannotAddPipeLeftToTheField() {
-        field.addPipe(new Pipe(HORIZONTAL_PIPE, -1, size / 2));
-    }
-
-    @Test(expected = CannotAddPipeException.class)
-    public void cannotAddPipeRightToTheField() {
-        field.addPipe(new Pipe(HORIZONTAL_PIPE, size + 1, size / 2));
-    }
-
-    @Test(expected = CannotAddPipeException.class)
-    public void cannotAddPipeTwiceInTheSamePosition() {
-        field.addPipe(new Pipe(HORIZONTAL_PIPE, 3, 3));
-        field.addPipe(new Pipe(UP_LEFT_PIPE, 3, 3));
-    }
-
     // pipe could be added only if it is connected to last pipe in already built pipeline
+
 }
