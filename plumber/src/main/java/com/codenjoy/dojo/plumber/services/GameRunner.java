@@ -25,8 +25,14 @@ package com.codenjoy.dojo.plumber.services;
 
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.plumber.client.ai.PlumberSolver;
-import com.codenjoy.dojo.plumber.model.*;
-import com.codenjoy.dojo.services.*;
+import com.codenjoy.dojo.plumber.model.BoardStartConfig;
+import com.codenjoy.dojo.plumber.model.Elements;
+import com.codenjoy.dojo.plumber.model.Field;
+import com.codenjoy.dojo.plumber.model.Player;
+import com.codenjoy.dojo.services.AbstractGameType;
+import com.codenjoy.dojo.services.EventListener;
+import com.codenjoy.dojo.services.GameType;
+import com.codenjoy.dojo.services.PlayerScores;
 import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.multiplayer.GamePlayer;
 import com.codenjoy.dojo.services.multiplayer.MultiplayerType;
@@ -46,7 +52,7 @@ public class GameRunner extends AbstractGameType implements GameType {
         boardStartConfig = new BoardStartConfig(getMap());
     }
 
-    protected String getMap() {
+    private String getMap() {
         return "☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼☼" +
                 "☼          $                 ☼" +
                 "☼                            ☼" +
@@ -111,7 +117,7 @@ public class GameRunner extends AbstractGameType implements GameType {
 
     @Override
     public GamePlayer createPlayer(EventListener listener, String save, String playerName) {
-        return new Player(listener);
+        return new Player(listener, null);
     }
 
     @Override

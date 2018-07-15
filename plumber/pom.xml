@@ -14,6 +14,7 @@
 
     <properties>
         <module.name>plumber</module.name>
+        <junitparams.version>1.1.1</junitparams.version>
     </properties>
 
     <repositories>
@@ -39,6 +40,12 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>pl.pragmatists</groupId>
+            <artifactId>JUnitParams</artifactId>
+            <version>${junitparams.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

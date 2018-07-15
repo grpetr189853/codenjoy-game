@@ -23,8 +23,7 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-import com.codenjoy.dojo.plumber.model.items.Pipes;
-import com.codenjoy.dojo.services.multiplayer.GameField;
+import com.codenjoy.dojo.plumber.model.items.Pipe;
 import com.codenjoy.dojo.services.multiplayer.PlayerHero;
 
 /**
@@ -33,8 +32,7 @@ import com.codenjoy.dojo.services.multiplayer.PlayerHero;
  * Ну и конечно же он имплементит {@see State}, а значит может быть отрисован на поле.
  * Часть этих интерфейсов объявлены в {@see PlayerHero}, а часть явно тут.
  */
-public class Hero extends PlayerHero<GameField<Player>> {
-
+public class Hero extends PlayerHero<Field> {
     @Override
     public void down() {
 
@@ -57,18 +55,15 @@ public class Hero extends PlayerHero<GameField<Player>> {
 
     @Override
     public void act(final int... ints) {
-
+        int code = ints[0];
+        int x = ints[1];
+        int y = ints[2];
+        this.field.addPipe(Pipe.Builder.build(code, x, y));
     }
 
     @Override
     public void tick() {
-        this.field.addPipe();
-    }
-
-    public void addPipe(Pipes pipe, int x, int y){
-        this.nextPipeToAdd = pipe;
-        this.nextX = x;
-        this.nextY = y;
 
     }
+
 }

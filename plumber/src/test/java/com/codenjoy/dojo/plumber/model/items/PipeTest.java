@@ -24,23 +24,24 @@ package com.codenjoy.dojo.plumber.model.items;
 
 
 import com.codenjoy.dojo.plumber.model.Elements;
-import com.codenjoy.dojo.plumber.model.Player;
-import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.PointImpl;
-import com.codenjoy.dojo.services.State;
+import org.junit.Assert;
+import org.junit.Test;
 
-public class Output extends PointImpl implements State<Elements, Player> {
+public class PipeTest {
+    @Test
+    public void pipesEqualWhenCoordinatesAreSame() {
+        int x = 42;
+        int y = 1;
+        Pipe pipe1 = new Pipe(Elements.HORIZONTAL_PIPE, x, y);
+        Pipe pipe2 = new Pipe(Elements.HORIZONTAL_PIPE, x, y);
 
-    public Output(int x, int y) {
-        super(x, y);
+        Assert.assertEquals(pipe1, pipe2);
     }
+    @Test
+    public void pipesNotEqualWhenCoordinatesAreDifferent() {
+        Pipe pipe1 = new Pipe(Elements.HORIZONTAL_PIPE, 1, 2);
+        Pipe pipe2 = new Pipe(Elements.HORIZONTAL_PIPE, 3, 4);
 
-    public Output(Point point) {
-        super(point);
-    }
-
-    @Override
-    public Elements state(Player player, Object... alsoAtPoint) {
-        return Elements.OUTPUT;
+        Assert.assertNotEquals(pipe1, pipe2);
     }
 }

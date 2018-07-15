@@ -25,15 +25,17 @@ package com.codenjoy.dojo.plumber;
 
 import com.codenjoy.dojo.plumber.model.BoardStartConfig;
 import com.codenjoy.dojo.plumber.model.Field;
+import com.codenjoy.dojo.plumber.model.Hero;
 import com.codenjoy.dojo.plumber.model.Player;
 import com.codenjoy.dojo.services.EventListener;
 import com.codenjoy.dojo.services.multiplayer.Single;
 import com.codenjoy.dojo.services.printer.PrinterFactory;
 import com.codenjoy.dojo.services.printer.PrinterFactoryImpl;
 import com.codenjoy.dojo.utils.TestUtils;
-import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
+
+import static org.junit.Assert.assertEquals;
 
 public class SmokeTest {
 
@@ -50,7 +52,7 @@ public class SmokeTest {
                 "☼☼☼☼☼☼☼");
 
         Field startField = new Field(config);
-        Player player = new Player(Mockito.mock(EventListener.class));
+        Player player = new Player(Mockito.mock(EventListener.class), null);
         Single game = new Single(startField, player, factory);
 
         String expectedBoardStart = TestUtils.injectN("☼☼☼☼☼☼☼" +
@@ -60,7 +62,7 @@ public class SmokeTest {
                 "☼     ☼" +
                 "☼     ☼" +
                 "☼☼☼☼☼☼☼");
-        Assert.assertEquals(expectedBoardStart, game.getBoardAsString());
+        assertEquals(expectedBoardStart, game.getBoardAsString());
     }
 
     @Test
@@ -75,11 +77,13 @@ public class SmokeTest {
                 "☼     ☼" +
                 "☼☼☼☼☼☼☼");
 
-        Field startField = new Field(config);
-        Player player = new Player(Mockito.mock(EventListener.class));
-        Single game = new Single(startField, player, factory);
+        Field field = new Field(config);
+        Player player = new Player(Mockito.mock(EventListener.class), new Hero());
+        Single game = new Single(field, player, factory);
+        field.newGame(player);
 
-        player.getHero().
+        player.getHero().act(0, 1, 3);
+        field.tick();
 
         String expectedBoardStart = TestUtils.injectN("☼☼☼☼☼☼☼" +
                 "☼     ☼" +
@@ -88,6 +92,6 @@ public class SmokeTest {
                 "☼     ☼" +
                 "☼     ☼" +
                 "☼☼☼☼☼☼☼");
-        Assert.assertEquals(expectedBoardStart, game.getBoardAsString());
+        assertEquals(expectedBoardStart, game.getBoardAsString());
     }
 }

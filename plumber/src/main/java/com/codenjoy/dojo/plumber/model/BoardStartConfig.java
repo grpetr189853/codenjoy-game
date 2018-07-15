@@ -23,7 +23,6 @@ package com.codenjoy.dojo.plumber.model;
  */
 
 
-
 import com.codenjoy.dojo.plumber.model.items.Input;
 import com.codenjoy.dojo.plumber.model.items.Output;
 import com.codenjoy.dojo.plumber.model.items.Wall;
@@ -33,9 +32,7 @@ import com.codenjoy.dojo.services.Point;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.codenjoy.dojo.plumber.model.Elements.INPUT;
-import static com.codenjoy.dojo.plumber.model.Elements.OUTPUT;
-import static com.codenjoy.dojo.plumber.model.Elements.WALL;
+import static com.codenjoy.dojo.plumber.model.Elements.*;
 import static java.util.stream.Collectors.toList;
 
 /**
@@ -55,18 +52,18 @@ public class BoardStartConfig {
         return (int) Math.sqrt(map.length());
     }
 
-    public List<Input> getInput() {
+    List<Input> getInput() {
         return pointsOf(INPUT).stream()
                 .map(Input::new)
                 .collect(toList());
     }
-    public List<Output> getOutput() {
+    List<Output> getOutput() {
         return pointsOf(OUTPUT).stream()
                 .map(Output::new)
                 .collect(toList());
     }
 
-    public List<Wall> getWalls() {
+    List<Wall> getWalls() {
         return pointsOf(WALL).stream()
                 .map(Wall::new)
                 .collect(toList());

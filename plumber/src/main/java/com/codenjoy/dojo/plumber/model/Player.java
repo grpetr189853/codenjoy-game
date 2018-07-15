@@ -33,10 +33,11 @@ import com.codenjoy.dojo.services.multiplayer.GamePlayer;
  */
 public class Player extends GamePlayer<Hero, Field> {
 
-    private Hero hero;
+    private final Hero hero;
 
-    public Player(EventListener listener) {
+    public Player(EventListener listener, Hero hero) {
         super(listener);
+        this.hero = hero;
     }
 
     public void event(Events event) {
@@ -58,8 +59,7 @@ public class Player extends GamePlayer<Hero, Field> {
 
     @Override
     public void newHero(Field field) {
-        this.hero = new Hero();
-        this.hero.init(field);
+        getHero().init(field);
     }
 
     @Override

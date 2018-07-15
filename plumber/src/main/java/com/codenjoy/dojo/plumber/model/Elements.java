@@ -34,7 +34,13 @@ public enum Elements implements CharElements {
     NONE(' '),       // например это пустое место, куда можно перейти герою
     WALL('☼'),       // а это стенка, через которую я хочу чтобы проходить нельзя было
     INPUT('╠'),
-    OUTPUT('╣');
+    OUTPUT('╣'),
+    HORIZONTAL_PIPE('═'),
+    VERTICAL_PIPE('║'),
+    UP_LEFT_PIPE('╔'),
+    UP_RIGHT_PIPE('╗'),
+    DOWN_LEFT_PIPE('╚'),
+    DOWN_RIGHT_PIPE('╝');
 
     final char ch;
 

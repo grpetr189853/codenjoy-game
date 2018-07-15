@@ -23,10 +23,10 @@ package com.codenjoy.dojo.plumber.client;
  */
 
 
-import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.client.Solver;
 import com.codenjoy.dojo.client.WebSocketRunner;
 import com.codenjoy.dojo.services.Dice;
+import com.codenjoy.dojo.services.Direction;
 import com.codenjoy.dojo.services.RandomDice;
 
 /**
@@ -46,7 +46,7 @@ public class YourSolver implements Solver<Board> {
     private Dice dice;
     private Board board;
 
-    public YourSolver(Dice dice) {
+    private YourSolver(Dice dice) {
         this.dice = dice;
     }
 

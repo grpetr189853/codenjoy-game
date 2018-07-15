@@ -25,16 +25,13 @@ package com.codenjoy.dojo.plumber.model;
 
 import com.codenjoy.dojo.plumber.model.items.Input;
 import com.codenjoy.dojo.plumber.model.items.Output;
+import com.codenjoy.dojo.plumber.model.items.Pipe;
 import com.codenjoy.dojo.plumber.model.items.Wall;
 import com.codenjoy.dojo.services.Point;
-import com.codenjoy.dojo.services.Tickable;
 import com.codenjoy.dojo.services.multiplayer.GameField;
 import com.codenjoy.dojo.services.printer.BoardReader;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * О! Это самое сердце игры - борда, на которой все происходит.
@@ -44,8 +41,9 @@ import java.util.Optional;
 public class Field implements GameField<Player> {
 
     private final List<Input> input;
-    private final List<Wall> walls;
     private final List<Output> output;
+    private final List<Wall> walls;
+    private final Collection<Pipe> pipes;
 
     private Player player;
 
@@ -56,6 +54,7 @@ public class Field implements GameField<Player> {
         input = startConfig.getInput();
         output = startConfig.getOutput();
         size = startConfig.getSize();
+        pipes = new LinkedHashSet<>();
     }
 
     @Override
@@ -105,8 +104,13 @@ public class Field implements GameField<Player> {
                     addAll(Field.this.walls);
                     addAll(Field.this.input);
                     addAll(Field.this.output);
+                    addAll(Field.this.pipes);
                 }};
             }
         };
+    }
+
+    public boolean addPipe(Pipe pipe) {
+        return pipes.add(pipe);
     }
 }
